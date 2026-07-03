@@ -86,5 +86,11 @@ Return only valid JSON.
         .replace(/```/g, "")
         .trim();
 
-    return JSON.parse(text);
+    try {
+      return JSON.parse(text);
+    } catch (error) {
+      throw new Error("Gemini returned invalid JSON");
+    }
+
+    
 };
