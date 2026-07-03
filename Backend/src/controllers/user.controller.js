@@ -62,6 +62,13 @@ const LoginUser= asyncHandler(async(req,res) =>{
 
     const {email,password}= req.body;
 
+    if (!email?.trim() || !password?.trim()) {
+    return res.status(400).json({
+        success: false,
+        message: "Email and password are required."
+    });
+}
+
     //step1 check user register or not
     const user=await User.findOne({email})
 
@@ -107,6 +114,10 @@ const LoginUser= asyncHandler(async(req,res) =>{
         
     } catch (error) {
         console.log(error)
+         return res.status(500).json({
+        success:false,
+        message:"Unable to login."
+    });
     }
     
 })
@@ -117,8 +128,9 @@ const LogoutUser=asyncHandler(async(req,res)=>{
 
     const options={
          httpOnly: true,
-         secure: false,
-         sameSite: "lax"
+         secure: process.env.NODE_ENV === "production",
+         sameSite: process.env.NODE_ENV === "production" ? "none"
+           : "lax"
     };
    try {
     
@@ -143,6 +155,10 @@ const LogoutUser=asyncHandler(async(req,res)=>{
     
    } catch (error) {
       console.log(error);
+      return res.status(500).json({
+      success:false,
+      message:"Logout failed."
+   });
    } 
 
 

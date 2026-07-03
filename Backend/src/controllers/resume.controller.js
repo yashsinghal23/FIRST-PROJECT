@@ -21,23 +21,46 @@ const uploadResume = asyncHandler(async (req, res) => {
     const localPath = req.file.path;
 
     // 3. Extract PDF Text
-  const buffer = fs.readFileSync(localPath);
+  let resumeText;
 
-const data = await pdf(buffer);
-
-const resumeText = data.text;
+   try {
+    const buffer = fs.readFileSync(localPath);
+    const data = await pdf(buffer);
+    resumeText = data.text;
+   } catch (error) {
+    return res.status(400).json({
+        success: false,
+        message: "Invalid or corrupted PDF."
+    });
+}
 
     // 4. Upload Resume to Cloudinary
     const uploadedResume = await uploadOnCloudinary(localPath);
 
+    if (!uploadedResume) {
+    return res.status(500).json({
+        success: false,
+        message: "Resume upload failed."
+    });
+}
+
  
 
     // 5. Call Gemini
-    const analysis = await analyzeResume({
+    let analysis;
+
+try {
+    analysis = await analyzeResume({
         resumeText,
         selfDescription,
         jobDescription
     });
+} catch (error) {
+    return res.status(503).json({
+        success: false,
+        message: "AI service unavailable."
+    });
+}
 
     // analysis should return
     // {
