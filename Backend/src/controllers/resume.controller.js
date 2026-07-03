@@ -15,7 +15,7 @@ const uploadResume = asyncHandler(async (req, res) => {
     }
 
     const localPath = req.file.path;
-
+    console.log("1 step work");
     try {
         // 2. Get and Validate Body Data
         const { selfDescription, jobDescription, filename } = req.body;
@@ -27,6 +27,7 @@ const uploadResume = asyncHandler(async (req, res) => {
             });
         }
 
+        console.log("2 step work")
         // 3. Extract PDF Text
         let resumeText;
         try {
@@ -40,6 +41,8 @@ const uploadResume = asyncHandler(async (req, res) => {
             });
         }
 
+         console.log("3 step work")
+
         // 4. Upload Resume to Cloudinary
         const uploadedResume = await uploadOnCloudinary(localPath);
         if (!uploadedResume) {
@@ -49,6 +52,7 @@ const uploadResume = asyncHandler(async (req, res) => {
             });
         }
 
+         console.log("4 step work")
         // 5. Call Gemini
         let analysis;
         try {
@@ -64,6 +68,7 @@ const uploadResume = asyncHandler(async (req, res) => {
             });
         }
 
+         console.log("5 step work")
         const atsScore = Number(analysis.atsScore) || 0;
 
         // 6. Save to MongoDB
@@ -80,6 +85,7 @@ const uploadResume = asyncHandler(async (req, res) => {
             preparationPlan: analysis.preparationPlan || ""
         });
 
+         console.log("6 step work")
         // 7. Send Response
         return res.status(201).json({
             success: true,
