@@ -7,18 +7,36 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
+# Dependencies & Build Output
+node_modules/
+dist/
+dist-ssr/
+build/
+.next/
+.nuxt/
+
+# Local Environment Variables
+.env
+.env.local
+.env.*.local
 *.local
 
-# Editor directories and files
+# Editor-specific files (VS Code, WebStorm, etc.)
 .vscode/*
 !.vscode/extensions.json
-.idea
-.DS_Store
+.idea/
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
-*.sw?
+*.swp
+*.swo
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+
+# Testing & Coverage outputs
+coverage/
+.nyc_output/
+.cypress/
