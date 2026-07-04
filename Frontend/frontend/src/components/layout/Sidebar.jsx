@@ -18,28 +18,44 @@ const Sidebar = () => {
 
         <NavLink
           to="/dashboard"
-          className="rounded-lg p-3 hover:bg-blue-100"
+          className={({ isActive }) =>
+            `rounded-lg p-3 hover:bg-blue-100 ${
+              isActive ? "bg-blue-600 text-white hover:bg-blue-600" : ""
+            }`
+          }
         >
           Dashboard
         </NavLink>
 
         <NavLink
           to="/resume/upload"
-          className="rounded-lg p-3 hover:bg-blue-100"
+          className={({ isActive }) =>
+            `rounded-lg p-3 hover:bg-blue-100 ${
+              isActive ? "bg-blue-600 text-white hover:bg-blue-600" : ""
+            }`
+          }
         >
           Upload Resume
         </NavLink>
 
         <NavLink
           to="/resume/history"
-          className="rounded-lg p-3 hover:bg-blue-100"
+          className={({ isActive }) =>
+            `rounded-lg p-3 hover:bg-blue-100 ${
+              isActive ? "bg-blue-600 text-white hover:bg-blue-600" : ""
+            }`
+          }
         >
           Resume History
         </NavLink>
 
         <NavLink
           to="/profile"
-          className="rounded-lg p-3 hover:bg-blue-100"
+          className={({ isActive }) =>
+            `rounded-lg p-3 hover:bg-blue-100 ${
+              isActive ? "bg-blue-600 text-white hover:bg-blue-600" : ""
+            }`
+          }
         >
           Profile
         </NavLink>

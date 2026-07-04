@@ -32,6 +32,9 @@ const Profile = () => {
     newPassword: "",
   });
 
+  const [profileError, setProfileError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
   const handleProfileChange = (e) => {
 
     setProfileData({
@@ -54,11 +57,19 @@ const Profile = () => {
 
     e.preventDefault();
 
-    await updateProfile(profileData);
+    setProfileError("");
 
-    await getMe();
+    try {
+      await updateProfile(profileData);
 
-    alert("Profile Updated");
+      await getMe();
+
+      alert("Profile Updated");
+    } catch (err) {
+      setProfileError(
+        err.response?.data?.message || "Failed to update profile."
+      );
+    }
 
   };
 
@@ -66,14 +77,22 @@ const Profile = () => {
 
     e.preventDefault();
 
-    await changePassword(passwordData);
+    setPasswordError("");
 
-    alert("Password Changed");
+    try {
+      await changePassword(passwordData);
 
-    setPasswordData({
-      oldPassword: "",
-      newPassword: "",
-    });
+      alert("Password Changed");
+
+      setPasswordData({
+        oldPassword: "",
+        newPassword: "",
+      });
+    } catch (err) {
+      setPasswordError(
+        err.response?.data?.message || "Failed to change password."
+      );
+    }
 
   };
 
@@ -121,6 +140,10 @@ const Profile = () => {
             onChange={handleProfileChange}
           />
 
+          {profileError && (
+            <p className="text-sm text-red-500">{profileError}</p>
+          )}
+
           <Button type="submit">
             Update Profile
           </Button>
@@ -155,6 +178,10 @@ const Profile = () => {
             value={passwordData.newPassword}
             onChange={handlePasswordChange}
           />
+
+          {passwordError && (
+            <p className="text-sm text-red-500">{passwordError}</p>
+          )}
 
           <Button type="submit">
             Change Password

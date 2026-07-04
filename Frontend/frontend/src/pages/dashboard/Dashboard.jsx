@@ -23,7 +23,7 @@ const Dashboard = () => {
 
   const highestATS =
     history.length > 0
-      ? Math.max(...history.map((r) => r.atsScore))
+      ? Math.max(...history.map((r) => r.atsScore || 0))
       : 0;
 
   const latestResume = history[0];
