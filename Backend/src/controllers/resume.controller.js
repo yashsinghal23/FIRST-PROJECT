@@ -82,7 +82,7 @@ const uploadResume = asyncHandler(async (req, res) => {
             technicalQuestions: analysis.technicalQuestions || [],
             behavioralQuestions: analysis.behavioralQuestions || [],
             skillsGap: analysis.skillsGap || [],
-            preparationPlan: analysis.preparationPlan || ""
+            preparationPlan: analysis.preparationPlan || []
         });
 
          console.log("6 step work")
